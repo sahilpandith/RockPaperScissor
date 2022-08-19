@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>landing page</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div style="position: relative;">
+        <header>Play Rock Paper Scissor</header>
+        <div class="container">
+            <div class="game">
+                <div class="displaySelection">
+                    <div class="playerSelection">
+                        <div>Player Selection</div>
+                        <div>?</div>
+                    </div>
+                    <div>vs</div>
+                    <div class="computerSelection">
+                        <div>Computer Selection</div>
+                        <div>?</div>
+                    </div>
+                </div>
+                <div class="selectionList">
+                    <button class="btn btn-square" id="rockBtn" onclick="onSelection('✊')">
+                        <div class="sign">✊</div>
+                    </button>
+                    <button class="btn btn-square" id="paperBtn" onclick="onSelection('✋')">
+                        <div class="sign">✋</div>
+                    </button>
+                    <button class="btn btn-square" id="scissorsBtn" onclick="onSelection('✌')">
+                        <div class="sign">✌</div>
+                    </button>
+                </div>
+                <div class="currrentGameStatus"></div>
+                <div class="displayScore">
+                    <div class="playerScore">
+                        <div>Player Score</div>
+                        <div>0</div>
+                    </div>
+                    <div>vs</div>
+                    <div class="computerScore">
+                        <div>Computer Score</div>
+                        <div>0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog">
+            <div class="dialogContainer">
+                <div class="finalGameResult">you won!!</div>
+                <button class="btn btn-square" id="rockBtn" onclick="playAgain()">
+                    <div>Play Again</div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <style>
+        .dialog{
+            display: none;
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            height: 250px;
+            width: 450px;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            box-shadow: 0px 0px 17px 7px #454343;
+            opacity: 0.9;
+        }
+        .dialogContainer{
+            display: flex;
+            flex-direction: column;
+            height: 250px;
+            width: 450px;
+            justify-content: space-around;
+        }
+        .finalGameResult {
+            text-align: center;
+            font-size: 20px;
+            font-size: 25px;
+            font-weight: 600;
+            font-family: cursive;
+        }
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70vh;
+        }
+        .game {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selectionList {
+            display: flex;
+            justify-content: space-between;
+            grid-gap: 10px;
+        }
+
+        .displaySelection {
+            display: flex;
+            justify-content: space-between;
+            grid-gap: 32px;
+            align-items: center;
+        }
+
+        .displaySelection div {
+            padding: 10px 0px;
+        }
+
+        .playerSelection, .computerSelection {
+            display: flex;
+            flex-direction: column;
+        }
+        .computerSelection div:nth-child(2) {
+            align-self: center;
+        }
+
+        .playerSelection div:nth-child(2) {
+            align-self: center;
+        }
+
+        .displayScore {
+            display: flex;
+            justify-content: space-between;
+            grid-gap: 10px;
+            align-items: center;
+            margin-top: 50px;
+            padding: 5px;
+            box-shadow: 0px 1px 12px 3px grey;
+        }
+
+        .displayScore div {
+            padding: 10px 0px;
+        }
+
+        .playerScore, .computerScore {
+            display: flex;
+            flex-direction: column;
+        }
+        .playerScore div:nth-child(2) {
+            align-self: center;
+        }
+        .computerScore div:nth-child(2) {
+            align-self: center;
+        }
+        header {
+            font-size: 35px;
+            font-weight: 800;
+            font-family: cursive;
+            text-align: center;
+            padding: 40px;
+            color: black;
+            text-shadow: 0px 0px 1px black;
+            /* box-shadow: 0px 0px 11px 9px gainsboro; */
+            margin: 5px;
+            box-shadow: 0px 1px 12px 3px grey;
+        }
+        .currrentGameStatus {
+            text-align: center;
+            margin-top: 15px;
+            height: 30px;
+            width: -webkit-fill-available;
+        }
+        .selectionList div,.displaySelection div,.displayScore div,.currrentGameStatus{
+            font-size: 25px;
+            font-weight: 600;
+            font-family: cursive;
+        }
+
+        .btn {
+            box-shadow: 0px 0px 7px 2px grey;
+            border: none;
+            border-radius: 15px;
+            min-height: 45px;
+            min-width: 45px;
+        }
+
+        .btn:hover {
+            box-shadow: 0px 0px 7px 2px black;
+            border: 1px solid grey;
+            border-radius: 15px;
+        }
+
+    </style>
+    
+    <script>
+        let computerWins = 0
+        let playerWins = 0
+        function getComputerSelection(){
+            const possibleSelections = ['✌', '✊', '✋']
+            const index = Math.floor(Math.random() * possibleSelections.length)
+            return possibleSelections[index]
+        }
+        function playGame(playerSelection, computerSelection){
+            if(playerSelection==='✊'){
+                if(computerSelection==='✊'){
+                    return 'draw'
+                }else if(computerSelection ==='✋'){
+                    return 'you lose !! ✋ beats ✊'
+                }else if(computerSelection ==='✌'){
+                    return 'you win !! ✊ beats ✌'
+                }
+            }else if(playerSelection==='✋'){
+                if(computerSelection==='✋'){
+                    return 'draw'
+                }else if(computerSelection ==='✊'){
+                    return 'you win !! ✋ beats ✊'
+                }else if(computerSelection ==='✌'){
+                    return 'you lose !! ✌ beats ✋'
+                }
+            }else if(playerSelection==='✌'){
+                if(computerSelection==='✌'){
+                    return 'draw'
+                }else if(computerSelection ==='✋'){
+                    return 'you win !! ✌ beats ✋'
+                }else if(computerSelection ==='✊'){
+                    return 'you lose !! ✊ beats ✌'
+                }
+            }
+        }
+
+        function onSelection(playerSelection){
+            const computerSelection = getComputerSelection()
+            const gameResult = playGame(playerSelection,computerSelection)
+            this.updateCurrentSelection(playerSelection,computerSelection)
+            this.updateCurrentGameStatus(gameResult)
+            this.updateScoreBoard(gameResult)
+            if(computerWins > 5 || playerWins >5){
+                if(computerWins>5){
+                    this.displayDialog('computer won !!')
+                }else{
+                    this.displayDialog('you won !!')
+                }
+            }
+        }
+        function displayDialog(text){
+            document.querySelector('.dialog').style.display= 'block'
+            document.querySelector('.finalGameResult').innerHTML = text
+
+        }
+        function hideDialog(){
+            document.querySelector('.dialog').style.display= 'none'
+            document.querySelector('.finalGameResult').innerHTML = ''
+
+        }
+        function playAgain(){
+            this.hideDialog()
+            this.clearCurrentGameStatus()
+            this.clearScoreBoard()
+        }
+        function updateCurrentGameStatus(gameResult){
+            document.querySelector('.currrentGameStatus').innerHTML=gameResult
+        }
+        function clearCurrentGameStatus(){
+            document.querySelector('.currrentGameStatus').innerHTML=''
+        }
+        function updateCurrentSelection(playerSelection,computerSelection){
+            document.querySelector('.playerSelection div:nth-child(2)').innerHTML = playerSelection
+            document.querySelector('.computerSelection div:nth-child(2)').innerHTML = computerSelection
+        }
+        function updateScoreBoard(gameResult){
+            gameResult.includes('win') && playerWins++ 
+            gameResult.includes('lose') && computerWins++ 
+            document.querySelector('.playerScore div:nth-child(2)').innerHTML = playerWins
+            document.querySelector('.computerScore div:nth-child(2)').innerHTML = computerWins
+        }
+        function clearScoreBoard(){
+                computerWins=0
+                playerWins=0
+                document.querySelector('.playerScore div:nth-child(2)').innerHTML = playerWins
+                document.querySelector('.computerScore div:nth-child(2)').innerHTML = computerWins
+        }
+      
+    </script>
+
+</body>
+</html>
