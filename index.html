@@ -252,6 +252,7 @@
             this.hideDialog()
             this.clearCurrentGameStatus()
             this.clearScoreBoard()
+            this.clearCurrentSelection()
         }
         function updateCurrentGameStatus(gameResult){
             document.querySelector('.currrentGameStatus').innerHTML=gameResult
@@ -262,6 +263,10 @@
         function updateCurrentSelection(playerSelection,computerSelection){
             document.querySelector('.playerSelection div:nth-child(2)').innerHTML = playerSelection
             document.querySelector('.computerSelection div:nth-child(2)').innerHTML = computerSelection
+        }
+        function clearCurrentSelection(){
+            document.querySelector('.playerSelection div:nth-child(2)').innerHTML = '?'
+            document.querySelector('.computerSelection div:nth-child(2)').innerHTML = '?'
         }
         function updateScoreBoard(gameResult){
             gameResult.includes('win') && playerWins++ 
